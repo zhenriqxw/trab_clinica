@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orcamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="header">
+        {% if 'username' in session %}
+            <p>Bem-vindo, {{ session['username'] }}!</p>
+            <a href="{{ url_for('logout') }}">Sair</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a> | <a href="{{ url_for('register') }}">Cadastrar</a>
+        {% endif %}
+    </div>
+
+    <a href="{{ url_for('add_equipment') }}">Adicionar equipamento</a>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Model</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Value</th>
+            <th>Research Link</th>
+            <th>Actions</th>
+        </tr>
+        {% for equipment in equipments %}
+        <tr>
+            <td>{{ equipment.name }}</td>
+            <td>{{ equipment.description }}</td>
+            <td>{{ equipment.model }}</td>
+            <td>{{ equipment.quantity }}</td>
+            <td>{{ equipment.unit }}</td>
+            <td>{{ equipment.value }}</td>
+            <td><a href="{{ equipment.research_link }}" target="_blank">Link</a></td>
+            <td>
+                <a href="{{ url_for('edit_equipment', id=equipment.id) }}">Editar
+                <a href="{{ url_for('delete_equipment', id=equipment.id) }}" class="delete-link">Excluir
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="budget">
+        <h2>Total Budget: ${{ total_value }}</h2>
+    </div>
+
+    <div id="confirmModal" class="modal">
+      <div class="modal-content">
+        <p>Tem certeza que deseja excluir este item?</p>
+        <div class="modal-buttons">
+          <button id="confirmYes">Sim</button>
+          <button id="confirmNo">Não</button>
+        </div>
+      </div>
+    </div>
+
+</body>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</html>
