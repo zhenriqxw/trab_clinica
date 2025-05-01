@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='edit_connection.css') }}">
+    <title>Edit Connection</title>
+</head>
+<body>
+    <h1>Edit Connection</h1>
+    <form method="POST">
+        <label for="switch_port">Switch Port:</label>
+        <input type="text" name="switch_port" value="{{ connection.switch_port }}" required>
+        <br>
+        <label for="patch_panel_port">Patch Panel Port:</label>
+        <input type="text" name="patch_panel_port" value="{{ connection.patch_panel_port }}" required>
+        <br>
+        <button type="submit">Save</button>
+    </form>
+    <a href="{{ url_for('index') }}">Back</a>
+</body>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</html>

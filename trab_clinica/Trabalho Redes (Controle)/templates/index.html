@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rack Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="header">
+        {% if 'username' in session %}
+            <p>Bem-vindo, {{ session['username'] }}!</p>
+            <a href="{{ url_for('logout') }}">Sair</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a> | <a href="{{ url_for('register') }}">Cadastrar</a>
+        {% endif %}
+    </div>
+ 
+    <a href="{{ url_for('add_connection') }}">Add Connection</a>
+    <table>
+        <tr>
+            <th>Switch Port</th>
+            <th>Patch Panel Port</th>
+            <th>Actions</th>
+        </tr>
+        {% for connection in connections %}
+        <tr>
+            <td>{{ connection.switch_port }}</td>
+            <td>{{ connection.patch_panel_port }}</td>
+            <td>
+                <a href="{{ url_for('edit_connection', id=connection.id) }}">Edit</a>
+                <a href="#" class="delete-link" data-id="{{ connection.id }}">Delete</a>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="rack">
+        {% for connection in connections %}
+        <div class="port-pair">
+            <div class="port switch-port">{{ connection.switch_port }}</div>
+            <div class="port patch-panel-port">{{ connection.patch_panel_port }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+ <div id="confirmModal" class="modal">
+    <div class="modal-content">
+      <p>Tem certeza que deseja excluir este item?</p>
+      <div class="modal-buttons">
+        <button id="confirmYes">Sim</button>
+        <button id="confirmNo">Não</button>
+      </div>
+    </div>
+  </div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</html>
